@@ -3,4 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  validates :first_name, :last_name, :email, :password, :Date_birth, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+
 end
