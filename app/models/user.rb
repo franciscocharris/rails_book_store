@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :first_name, :last_name, :email, :password, :Date_birth, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-
+  has_one :author
 end
