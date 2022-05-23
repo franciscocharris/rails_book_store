@@ -1,53 +1,34 @@
 class AuthorsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_author, only: %i[show edit update destroy]
 
   def index
     @authors = Author.all
   end
 
-  def show
-  end
-
   def new
-    @author = Author.new
-  end
+    return redirect_to authors_path if current_user.author
 
-  def edit
+    @author = Author.new
   end
 
   def create
     @author = Author.new(author_params)
+    @author.user_id = current_user.id
+    return render :new, status: :unprocessable_entity unless @author.save
 
-    respond_to do |format|
-      if @author.save
-        format.html { redirect_to author_url(@author), notice: "Author was successfully created." }
-        format.json { render :show, status: :created, location: @author }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @author.errors, status: :unprocessable_entity }
-      end
-    end
+    redirect_to author_url(@author), notice: "Author was successfully created."
   end
 
   def update
-    respond_to do |format|
-      if @author.update(author_params)
-        format.html { redirect_to author_url(@author), notice: "Author was successfully updated." }
-        format.json { render :show, status: :ok, location: @author }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @author.errors, status: :unprocessable_entity }
-      end
-    end
+    return render :edit, status: :unprocessable_entity unless @author.update(author_params)
+
+    redirect_to author_url(@author), notice: "Author was successfully updated."
   end
 
   def destroy
     @author.destroy
-
-    respond_to do |format|
-      format.html { redirect_to authors_url, notice: "Author was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to authors_url, notice: "Author was successfully destroyed."
   end
 
   private
