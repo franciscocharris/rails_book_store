@@ -14,9 +14,13 @@
 
       
       <% if user_signed_in? %>
-          <li class='nav-item'>
-           
-          </li>
+          
+          <% if current_user.author %>
+            <li class='nav-item'>
+              <%= link_to "Tags", tags_path, class: 'nav-link' %>
+            </li>
+          <% end %>
+          
           <li class='nav-item'>
            <%= link_to "Authors", authors_path, class: 'nav-link' %>
           </li>

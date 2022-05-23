@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tags
   resources :authors
   root 'home#index'
   devise_for :users, controllers: {
