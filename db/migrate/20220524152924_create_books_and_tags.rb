@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBooksAndTags < ActiveRecord::Migration[6.1]
   def change
     create_table :books_tags, id: false do |t|
