@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_23_194756) do
+ActiveRecord::Schema.define(version: 2022_05_24_152924) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|
@@ -21,6 +22,28 @@ ActiveRecord::Schema.define(version: 2022_05_23_194756) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_authors_on_user_id"
+  end
+
+  create_table "books", primary_key: "code", id: :uuid, default: nil, force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.decimal "price", precision: 8, scale: 2
+    t.integer "n_pages"
+    t.date "d_published"
+    t.boolean "active", default: false
+    t.bigint "author_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_books_on_author_id"
+  end
+
+  create_table "books_tags", id: false, force: :cascade do |t|
+    t.uuid "book_code"
+    t.bigint "tag_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_code"], name: "index_books_tags_on_book_code"
+    t.index ["tag_id"], name: "index_books_tags_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -47,5 +70,6 @@ ActiveRecord::Schema.define(version: 2022_05_23_194756) do
   end
 
   add_foreign_key "authors", "users"
+  add_foreign_key "books", "authors"
   add_foreign_key "tags", "authors"
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :books
   resources :tags
   resources :authors
   root 'home#index'

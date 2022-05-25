@@ -1,0 +1,60 @@
+<%= form_with(model: @book, local: true) do |form| %>
+  <% if @book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+        <% @book.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :n_pages %>
+    <%= form.number_field :n_pages %>
+  </div>
+
+  <div class="field">
+    <%= form.label :d_published %>
+    <%= form.date_select :d_published %>
+  </div>
+
+  <div class="field">
+    <%= form.label :active %>
+    <%= form.check_box :active %>
+  </div>
+
+  <div class='field'>
+    <%= form.label :tag_elements %>
+    <div class='row'>
+      # nombre de los checkboxes, poder seleccionar multiples, valor de cada checkbox, seleccionado o no
+      <% @tags.each do |tag| %>
+        <label class='col-6 col-sm-3'>
+          <%= form.check_box :tag_elements, { multiple: true }, tag.id, nil %>
+          <%= tag.name %>
+        </label>
+      <%end%>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

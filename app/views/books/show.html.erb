@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<div class='margin-top'>
+  <p class='label'>Tags</p>
+  <% @book.tags.each do |tag| %>
+    <span class='badge badge-pill padding' style="background-color: black">
+      <%= link_to tag.name, tag, class: 'text-white' %>
+    </span>
+  <%end%>
+</div>
+
+<p>
+  <strong>Name:</strong>
+  <%= @book.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @book.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  $ <%= @book.price %>
+</p>
+
+<p>
+  <strong>N pages:</strong>
+  <%= @book.n_pages %>
+</p>
+
+<p>
+  <strong>D published:</strong>
+  <%= @book.d_published %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @book.active %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @book.author.name %>
+</p>
+
+<%= link_to 'Edit', edit_book_path(@book) %> |
+<%= link_to 'Back', books_path %>
