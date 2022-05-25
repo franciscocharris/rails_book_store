@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_25_193001) do
+ActiveRecord::Schema.define(version: 2022_05_25_213954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 2022_05_25_193001) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.uuid "book_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_code"], name: "index_requests_on_book_code"
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.bigint "author_id", null: false
@@ -83,5 +92,6 @@ ActiveRecord::Schema.define(version: 2022_05_25_193001) do
   add_foreign_key "authors", "users"
   add_foreign_key "books", "authors"
   add_foreign_key "comments", "users"
+  add_foreign_key "requests", "users"
   add_foreign_key "tags", "authors"
 end
