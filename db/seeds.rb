@@ -15,9 +15,11 @@ my_user = User.create!({ first_name: 'user 1', last_name: 'apellido',
 
 my_author = Author.create!({ name: 'author 1 user', user_id: my_user.id })
 my_tag = Tag.create!({ name: 'tag 1 user', author_id: my_author.id })
-my_book = Book.create!({code: SecureRandom.uuid, name: Faker::Book.title, author_id: my_author.id,
+my_book = Book.create!({ code: SecureRandom.uuid, name: Faker::Book.title, author_id: my_author.id,
                        description: "Molestiae ratione eo", price: 555, n_pages: 10,
-                       d_published: "2003-01-01", active: 1, tag_elements: ["1"]})
+                       d_published: "2003-01-01", active: 1 })
+books_tags = BooksTag.create!({ book_code: my_book.code, tag_id: my_tag.id })
+comment = Comment.create!({message: Faker::Lorem.paragraph, user_id: my_user.id, book_code: my_book.code })
 
 5.times do
   user = User.create!({ first_name: Faker::Name.first_name,
@@ -31,9 +33,11 @@ my_book = Book.create!({code: SecureRandom.uuid, name: Faker::Book.title, author
 end
 
 5.times do
-  Book.create!({code: SecureRandom.uuid, name: Faker::Book.title, author_id: 2,
-    description: "Molestiae ratione eo", price: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+  book = Book.create!({code: SecureRandom.uuid, name: Faker::Book.title, author_id: 2,
+    description: Faker::Lorem.paragraph, price: Faker::Number.decimal(l_digits: 3, r_digits: 2),
     n_pages: Faker::Number.number(digits: 4),
-    d_published: Faker::Date.in_date_period(month: 2), active: [true, false].sample,
-    tag_elements: [rand(1..5), rand(2..5)]})
+    d_published: Faker::Date.in_date_period(month: 2), active: [true, false].sample })
+
+  BooksTag.create!({book_code: book.code, tag_id: rand(1..5) })
+  Comment.create!({message: Faker::Lorem.paragraph, user_id: rand(1..6), book_code: book.code })
 end
