@@ -1,0 +1,7 @@
+<div class="card mt-2">
+  <div class="card-body">
+    <p class='title h3' ><%= comment.user.first_name %></p>
+    <p class='' > <%= comment.message %> </p>
+    <%= link_to 'delete', [comment.book, comment], method: :delete, class: 'btn btn-danger', data: { confirm: 'are you sure?' } %>
+  </div>
+</div>

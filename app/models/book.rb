@@ -5,6 +5,7 @@ class Book < ApplicationRecord
   belongs_to :author
   has_many :books_tags, foreign_key: 'book_code'
   has_many :tags, through: :books_tags, dependent: :destroy
+  has_many :comments, foreign_key: 'book_code'
   validates :name, :price, :n_pages, :d_published, :author, presence: true
   validates :name, length: { maximum: 30 },
                    format: { with: /\A[a-zA-Z0-9 ]+\z/, message: 'the name has specials characters' }
