@@ -5,7 +5,7 @@ class AuthorsController < ApplicationController
   before_action :set_author, only: %i[show edit update destroy]
 
   def index
-    @authors = Author.all
+    @pagy, @authors = pagy(Author.all)
   end
 
   def new

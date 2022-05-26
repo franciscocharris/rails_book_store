@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Authors</h1>
-
+<%== pagy_bootstrap_nav(@pagy) %>
 <table>
   <thead>
     <tr>
@@ -15,8 +15,10 @@
       <tr>
         <td><%= author.name %></td>
         <td><%= link_to 'Show', author %></td>
-        <td><%= link_to 'Edit', edit_author_path(author) %></td>
-        <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if author.user.id.eql?(current_user.id) %>
+          <td><%= link_to 'Edit', edit_author_path(author) %></td>
+          <td><%= link_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
