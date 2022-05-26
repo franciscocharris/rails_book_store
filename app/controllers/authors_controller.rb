@@ -14,6 +14,10 @@ class AuthorsController < ApplicationController
     @author = Author.new
   end
 
+  def show
+    @pagy, @books = pagy(@author.books.where(active: true))
+  end
+
   def create
     @author = Author.new(author_params)
     @author.user_id = current_user.id
