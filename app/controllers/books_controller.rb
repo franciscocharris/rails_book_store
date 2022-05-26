@@ -9,7 +9,9 @@ class BooksController < ApplicationController
     @books = Book.all
   end
 
-  def show; end
+  def show
+    @comments = @book.comments.all
+  end
 
   def new
     @book = Book.new

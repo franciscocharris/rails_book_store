@@ -19,7 +19,7 @@ my_book = Book.create!({ code: SecureRandom.uuid, name: Faker::Book.title, autho
                        description: "Molestiae ratione eo", price: 555, n_pages: 10,
                        d_published: "2003-01-01", active: 1 })
 books_tags = BooksTag.create!({ book_code: my_book.code, tag_id: my_tag.id })
-comment = Comment.create!({message: Faker::Lorem.paragraph, user_id: my_user.id, book_code: my_book.code })
+comment = Comment.create!({message: Faker::Lorem.paragraph, user_id: my_user.id, book_code: my_book.code, approved: true })
 
 5.times do
   user = User.create!({ first_name: Faker::Name.first_name,
@@ -39,5 +39,5 @@ end
     d_published: Faker::Date.in_date_period(month: 2), active: [true, false].sample })
 
   BooksTag.create!({book_code: book.code, tag_id: rand(1..5) })
-  Comment.create!({message: Faker::Lorem.paragraph, user_id: rand(1..6), book_code: book.code })
+  Comment.create!({message: Faker::Lorem.paragraph, user_id: rand(1..6), book_code: book.code, approved: [true, false].sample })
 end

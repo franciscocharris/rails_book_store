@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :books do
     resources :comments
   end
+  resources :requests
   resources :tags
   resources :authors
   root 'home#index'

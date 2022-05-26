@@ -1,7 +1,19 @@
+
+<% if comment.book.author.id.eql?(current_user.author.id) || comment.approved %>
 <div class="card mt-2">
   <div class="card-body">
     <p class='title h3' ><%= comment.user.first_name %></p>
     <p class='' > <%= comment.message %> </p>
-    <%= link_to 'delete', [comment.book, comment], method: :delete, class: 'btn btn-danger', data: { confirm: 'are you sure?' } %>
+    <p class='' > <%= comment.approved %> </p>
+    <% if comment.user.id.eql?(current_user.id) || comment.book.author.id.eql?(current_user.author.id) %>
+      <%= link_to 'delete', [comment.book, comment], method: :delete, class: 'btn btn-danger', data: { confirm: 'are you sure?' } %>
+    <% end %>
+
+    
+    <% if comment.book.author.id.eql?(current_user.author.id) %>
+      <%= link_to 'approve', [comment.book, comment], method: :post, class: 'btn btn-primary', data: { confirm: 'are you sure?' } %>
+    <% end %>
+    
   </div>
 </div>
+<% end %>
