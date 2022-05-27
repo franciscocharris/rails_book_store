@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @tag.name %>
+</p>
+<p>
+  <strong>Author:</strong>
+  <%= @tag.author.name %>
+</p>
+
+<%= link_to 'Edit', edit_tag_path(@tag) %> |
+<%= link_to 'Back', tags_path %>
+
+<hr>
+<p><%= @books.count %> books publiched</p>
+<%== pagy_bootstrap_nav(@pagy) %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <td>- <%= link_to book.name, book %></td>
+    <% end %>
+  </tbody>
+</table>

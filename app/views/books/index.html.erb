@@ -1,0 +1,67 @@
+<p id="notice"><%= notice %></p>
+
+<div class='margin-top'>
+  <p class='label'>Tags</p>
+  <% all_tags.each do |tag| %>
+    <span class='badge badge-pill padding' style="background-color: black">
+      <%= link_to tag.name, books_path(m: tag.class,name: tag.name), class: 'text-white' %>
+    </span>
+  <%end%>
+</div>
+
+<div class='margin-top'>
+  <p class='label'>Authors</p>
+  <% all_authors.each do |author| %>
+    <span class='badge badge-pill padding' style="background-color: black">
+      <%= link_to author.name, books_path(m: author.class, name: author.name), class: 'text-white' %>
+    </span>
+  <%end%>
+</div>
+
+<h1>Books</h1>
+<%== pagy_bootstrap_nav(@pagy) if @pagy %>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>N pages</th>
+      <th>D published</th>
+      <th>Active</th>
+      <th>Author</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      
+      <% if book.active || book.author.id.eql?(current_user.author.id) %>
+        <tr>
+          <td><%= book.code %></td>
+          <td><%= book.name %></td>
+          <td><%= book.description %></td>
+          <td>$ <%= book.price %></td>
+          <td><%= book.n_pages %></td>
+          <td><%= book.d_published %></td>
+          <td><%= book.active %></td>
+          <td><%= book.author_id %></td>
+          <td><%= link_to 'Show', book %></td>
+          
+          <% if book.author.id.eql?(current_user.author.id) %>
+            <td><%= link_to 'Edit', edit_book_path(book) %></td>
+            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+          
+        </tr>
+      <% end %>
+      
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Book', new_book_path %>
