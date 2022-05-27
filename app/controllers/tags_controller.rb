@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class TagsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_tag, only: %i[show edit update destroy]
 
   def index
-    @tags = Tag.all
+    @pagy, @tags = pagy(Tag.all)
+  end
+
+  def show
+    @pagy, @books = pagy(@tag.books.all)
   end
 
   def new

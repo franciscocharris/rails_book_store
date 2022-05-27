@@ -3,7 +3,7 @@
 class BooksController < ApplicationController
   require 'securerandom'
   before_action :set_book, only: %i[show edit update destroy]
-  before_action :authenticate_user!
+  
 
   def index
     @pagy, @books = pagy(Book.all)

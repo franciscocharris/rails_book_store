@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AuthorsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_author, only: %i[show edit update destroy]
 
   def index
@@ -15,7 +14,7 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @pagy, @books = pagy(@author.books.where(active: true))
+    @pagy, @books = pagy(@tag.books.where(active: true))
   end
 
   def create
