@@ -14,7 +14,16 @@
 
       
       <% if user_signed_in? %>
-          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                Tags
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% all_tags.each do |tag| %>
+                  <%= link_to tag.name, books_path(tag_type: tag.name), class: 'dropdown-item' %>
+                <% end %>
+              </div>
+            </li>
 
             <li class='nav-item'>
               <%= link_to "requests", requests_path, class: 'nav-link' %>

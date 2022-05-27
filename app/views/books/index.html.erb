@@ -1,7 +1,25 @@
 <p id="notice"><%= notice %></p>
 
+<div class='margin-top'>
+  <p class='label'>Tags</p>
+  <% all_tags.each do |tag| %>
+    <span class='badge badge-pill padding' style="background-color: black">
+      <%= link_to tag.name, books_path(m: tag.class,name: tag.name), class: 'text-white' %>
+    </span>
+  <%end%>
+</div>
+
+<div class='margin-top'>
+  <p class='label'>Authors</p>
+  <% all_authors.each do |author| %>
+    <span class='badge badge-pill padding' style="background-color: black">
+      <%= link_to author.name, books_path(m: author.class, name: author.name), class: 'text-white' %>
+    </span>
+  <%end%>
+</div>
+
 <h1>Books</h1>
-<%== pagy_bootstrap_nav(@pagy) %>
+<%== pagy_bootstrap_nav(@pagy) if @pagy %>
 <table>
   <thead>
     <tr>

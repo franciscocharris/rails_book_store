@@ -3,10 +3,12 @@
 class BooksController < ApplicationController
   require 'securerandom'
   before_action :set_book, only: %i[show edit update destroy]
-  
 
   def index
-    @pagy, @books = pagy(Book.all)
+    return (@pagy, @books = pagy(Book.all)) unless params.key?(:m)
+
+    @model = params[:m].camelize.constantize.find_by(name: params[:name])
+    @pagy, @books = pagy(@model.books.order('created_at desc'))
   end
 
   def show

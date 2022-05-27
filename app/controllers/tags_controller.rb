@@ -8,7 +8,7 @@ class TagsController < ApplicationController
   end
 
   def show
-    @pagy, @books = pagy(@tag.books.all)
+    @pagy, @books = pagy(@tag.books.all) if @tag.books.all
   end
 
   def new

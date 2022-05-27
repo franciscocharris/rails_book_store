@@ -21,23 +21,31 @@ my_book = Book.create!({ code: SecureRandom.uuid, name: Faker::Book.title, autho
 books_tags = BooksTag.create!({ book_code: my_book.code, tag_id: my_tag.id })
 comment = Comment.create!({message: Faker::Lorem.paragraph, user_id: my_user.id, book_code: my_book.code, approved: true })
 
-5.times do
+7.times do
   user = User.create!({ first_name: Faker::Name.first_name,
                         last_name: Faker::Name.middle_name,
                         Date_birth: Faker::Date.in_date_period(month: 2),
                         email: Faker::Internet.email,
                         password: '12345678' })
-
-  author = Author.create!({ name: "author #{Faker::Book.author}", user_id: user.id })
-  tag = Tag.create!({ name: "tag #{Faker::Book.genre}", author_id: author.id })
+  Author.create!({ name: "author #{Faker::Book.author}", user_id: user.id })
 end
 
-5.times do
-  book = Book.create!({code: SecureRandom.uuid, name: Faker::Book.title, author_id: 2,
-    description: Faker::Lorem.paragraph, price: Faker::Number.decimal(l_digits: 3, r_digits: 2),
-    n_pages: Faker::Number.number(digits: 4),
-    d_published: Faker::Date.in_date_period(month: 2), active: [true, false].sample })
+7.times do
+  Tag.create!({ name: "tag #{Faker::Book.genre}", author_id: rand(1..8) })
+end
 
-  BooksTag.create!({book_code: book.code, tag_id: rand(1..5) })
-  Comment.create!({message: Faker::Lorem.paragraph, user_id: rand(1..6), book_code: book.code, approved: [true, false].sample })
+40.times do
+  book = Book.create!({
+    code: SecureRandom.uuid,
+    name: Faker::Book.title, author_id: 2,
+    description: Faker::Lorem.paragraph,
+    price: Faker::Number.decimal(l_digits: 3, r_digits: 2),
+    n_pages: Faker::Number.number(digits: 4),
+    d_published: Faker::Date.in_date_period(month: 2),
+    active: [true, false].sample
+  })
+
+  BooksTag.create!({ book_code: book.code, tag_id: rand(1..7) })
+  Comment.create!({ message: Faker::Lorem.paragraph, user_id: rand(1..8), book_code: book.code, approved: [true, false].sample })
+  Request.create!({ user_id: rand(1..8), book_code: book.code })
 end

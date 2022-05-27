@@ -14,7 +14,7 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    @pagy, @books = pagy(@tag.books.where(active: true))
+    @pagy, @books = pagy(@author.books.where(active: true)) if @author.books.where(active: true)
   end
 
   def create
