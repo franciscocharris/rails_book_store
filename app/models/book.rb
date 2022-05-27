@@ -8,7 +8,8 @@ class Book < ApplicationRecord
   has_many :comments, foreign_key: 'book_code', dependent: :destroy
   has_many :requests, foreign_key: 'book_code', dependent: :destroy
   validates :name, :price, :n_pages, :d_published, :author, presence: true
-
+  validates :name, length: { maximum: 30 },
+                   format: { with: /\A[a-zA-Z0-9 ]+\z/, message: 'the name has specials characters' }
   validates :price, numericality: true, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }
   validates :n_pages, numericality: true
   attr_accessor :tag_elements
